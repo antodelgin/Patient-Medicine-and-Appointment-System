@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Patient Medicine and Appointment System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+<div th:replace="~{fragments.html :: header}"></div>
+
+<div class="container flex-grow-1 mt-5">
+    <div class="text-center mb-4">
+        <h1 class="fw-bold">Welcome to Patient Medicine & Appointment System</h1>
+        <p class="lead">Manage appointments, prescriptions, and patient records efficiently.</p><br><br>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-md-4">
+            <img th:src="@{/appointment-schedule.jpg}" alt="Appointment" class="img-fluid rounded" style="height: 200px; object-fit: cover;">
+            <h3 class="mt-3">Easy Appointment Booking</h3>
+            <p>Schedule appointments with doctors easily and view availability in real-time.</p>
+        </div>
+
+        <div class="col-md-4">
+            <img th:src="@{/doctor-management.jpg}" alt="Doctor" class="img-fluid rounded" style="height: 200px; object-fit: cover;">
+            <h3 class="mt-3">Doctor Management</h3>
+            <p>Doctors can manage their schedules, view patient details, and update prescriptions.</p>
+        </div>
+
+        <div class="col-md-4">
+            <img th:src="@{/prescription-tracker.jpg}" alt="Medicine" class="img-fluid rounded" style="height: 200px; object-fit: cover;">
+            <h3 class="mt-3">Prescription Tracking</h3>
+            <p>Patients can view prescribed medications and track their treatment plans.</p>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

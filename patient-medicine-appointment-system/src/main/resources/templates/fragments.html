@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}">Patient Medicine and Appointment System</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary" th:fragment="header">
+    <div class="container-fluid">
+
+        <a class="navbar-brand ms-3 text-white text-decoration-none" th:href="@{/}" th:text="'Patient Medicine & Appointment System'"></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li sec:authorize="hasAnyRole('PATIENT', 'ADMIN')" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="patientDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Patient
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="patientDropdown">
+                        <li><a class="dropdown-item" th:href="@{/patients/register}">Register New Patient</a></li>
+                        <li><a class="dropdown-item" th:href="@{/patients/patients-list}">View Patients</a></li>
+                        <li><a class="dropdown-item" th:href="@{/appointments/search}">Book Appointment</a></li>
+                    </ul>
+                </li>
+                <li sec:authorize="hasAnyRole('DOCTOR', 'ADMIN')" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="doctorDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Doctor
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="doctorDropdown">
+                        <li><a class="dropdown-item" th:href="@{/doctors/register}">Register New Doctor</a></li>
+                        <li><a class="dropdown-item" th:href="@{/doctors/doctors-list}">View Doctors</a></li>
+                        <li><a class="dropdown-item" th:href="@{/patients/patients-list}">View Patients</a></li>
+                    </ul>
+                </li>
+
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <form th:action="@{/logout}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-sm nav-link text-white">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div th:fragment="footer" class="mt-auto">
+    <footer class="mt-auto bg-dark text-light text-center py-3">
+        <p>&copy; 2025 Patient Medicine & Appointment System | All Rights Reserved</p>
+    </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

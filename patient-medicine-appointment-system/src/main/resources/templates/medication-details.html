@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Medication Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="d-flex flex-column min-vh-100 container-fluid px-0">
+<div th:replace="~{fragments :: header}"></div>
+
+<div class="card p-4 shadow-sm">
+    <th:block th:if="${not #lists.isEmpty(medications)}">
+        <p><strong>Patient ID:</strong>
+            <span th:text="${medications[0].patient.id}"></span> |
+            <strong>Patient Name:</strong>
+            <span th:text="${medications[0].patient.firstName + ' ' + medications[0].patient.lastName}"></span>
+        </p>
+        <p><strong>Doctor ID:</strong>
+            <span th:if="${medications[0].doctor != null}" th:text="${medications[0].doctor.id}"></span> |
+            <strong>Doctor Name:</strong>
+            <span th:if="${medications[0].doctor != null}" th:text="${medications[0].doctor.firstName + ' ' + medications[0].doctor.lastName}"></span>
+        </p>
+
+        <div class="mb-3" sec:authorize="hasAnyRole('DOCTOR', 'ADMIN')">
+            <a th:href="@{/medications/add-medication/{patientId}(patientId=${medications[0].patient.id})}" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Add New Medication
+            </a>
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Dosage</th>
+                <th>Frequency</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th sec:authorize="hasAnyRole('DOCTOR', 'ADMIN')">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="medication : ${medications}">
+                <td th:text="${medication.id}"></td>
+                <td th:text="${medication.name}"></td>
+                <td th:text="${medication.dosage}"></td>
+                <td th:text="${medication.frequency}"></td>
+                <td th:text="${medication.startDate}"></td>
+                <td th:text="${medication.endDate}"></td>
+                <td th:text="${medication.active} ? 'Active' : 'Inactive'"></td>
+                <td sec:authorize="hasAnyRole('DOCTOR', 'ADMIN')">
+                    <a th:href="@{/medications/update-medication/{id}(id=${medication.id})}" class="btn btn-primary btn-sm">
+                        Update
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </th:block>
+
+    <th:block th:if="${#lists.isEmpty(medications)}">
+
+        <div th:if="${patient != null}">
+            <p><strong>Patient:</strong> <span th:text="${patient.firstName + ' ' + patient.lastName}"></span></p>
+        </div>
+        <p>No medications found.</p>
+
+        <div class="mb-3" sec:authorize="hasAnyRole('DOCTOR', 'ADMIN')" th:if="${patientId != null}">
+            <a th:href="@{/medications/add-medication/{patientId}(patientId=${patientId})}" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Add New Medication
+            </a>
+        </div>
+    </th:block>
+
+    <a th:href="@{/patients/patients-list}" class="btn btn-secondary">Back</a>
+</div>
+
+<div th:replace="~{fragments :: footer}"></div>
+
+</body>
+</html>
